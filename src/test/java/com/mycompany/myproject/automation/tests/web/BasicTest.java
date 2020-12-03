@@ -34,15 +34,77 @@ public class BasicTest extends MyApplicationTestCase {
         FEATURE("Web-Based Feature Under Test");
         SCENARIO("Scenario Being Tested Here");
 
-        GIVEN("I have done something");
-        webElementVisible(Constants.LOGO_ANCHOR_IMAGE);
+        GIVEN("log into jira");
+        WHEN("enter username and password");
+        String usernameValue = "ucsdperftest@gmail.com";
+        String userPasswordValue = "ucsdperftest";
 
-        WHEN("I do something");
-        redirect("/help");
-        webAction(Constants.HELP_ANCHOR);
 
-        THEN("Something happens as expected");
-        webElementExists(Constants.HELP_ANCHOR);
+        webElementExists(Constants.USERNAME_INPUT);
+        webAction(Constants.USERNAME_INPUT, usernameValue);
+        THEN("submit");
+        webAction(Constants.SUBMIT_BUTTON);
+        webElementExists(Constants.PASSWORD_INPUT);
+        webAction(Constants.PASSWORD_INPUT, userPasswordValue);
+        webAction(Constants.SUBMIT_BUTTON);
+
+
+
+        String userStorySummary = "Quan Test";
+        GIVEN("click on create");
+        WHEN("CREATING STORY");
+
+        webElementExists(Constants.CREATE_STORY);
+        webAction(Constants.CREATE_STORY);
+
+        THEN("create story");
+        webElementExists(Constants.STORY_SUMMARY);
+        webAction(Constants.STORY_SUMMARY, userStorySummary);
+
+        GIVEN("Pick my project");
+        WHEN("Dropdown Menu appeared");
+        webElementExists(Constants.DROP_MENU);
+
+        THEN("pick my project");
+        webAction(Constants.DROP_MENU);
+        webAction(Constants.QN_PROJECT, "Quan Nguyen (QN)");
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+
+        //webAction(Constants.QN_PROJECT);
+        //waitForElementToBecomeEnabled("Quan Nguyen");
+
+        webElementExists(Constants.CREATE_STORY);
+        webAction(Constants.CREATE_BUTTON);
+
+
+        GIVEN("TRY TO DELETE PROJECT");
+        WHEN("IN DASHBOARD");
+
+        webElementExists(Constants.DROP_PROJECT);
+        webAction(Constants.DROP_PROJECT);
+
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+        webAction(Constants.QN_PROJECT_DASH, "Quan Nguyen (QN)");
+
+        THEN("SELECT DELETE FROM DASH");
+        webElementExists(Constants.SELECT_DELETE);
+        webAction(Constants.SELECT_DELETE);
+        webAction(Constants.DELETE_BUTTON);
+
 
     }
 
